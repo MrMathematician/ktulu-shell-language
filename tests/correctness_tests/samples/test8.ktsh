@@ -1,0 +1,5 @@
+$(ls -la)
+$(./executable)
+$(ll)
+$(ls | grep "test")
+$(ip route | head -1 | awk '{print$3}')

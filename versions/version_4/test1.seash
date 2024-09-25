@@ -1,0 +1,10 @@
+for(var i = 0; i < 5; i ++){
+  command(print(5));
+  command(ls -la);
+  print(5);
+  print("HELLO WORLD");
+}
+
+for(var j = 0; j < 6; j++){
+  print("What?");
+}

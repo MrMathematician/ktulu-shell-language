@@ -1,0 +1,7 @@
+DEVELOPER NOTES
+
+MODIFICATIONS THAT WERE MADE
+
+###########################
+
+1- The lexer was completely refactored again to use less code, and be more modular. Redundant parts were removed. The parser will be complete rewritten. 

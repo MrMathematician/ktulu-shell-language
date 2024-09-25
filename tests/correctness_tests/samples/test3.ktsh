@@ -1,0 +1,29 @@
+/*
+*
+*
+*
+A BUBBLE SOR ALGORITHM WORKS REALLY SIMPLY
+*
+*
+*
+*/
+
+// YOU TAKE AN ARRAY
+// YOU SORT IN O(n^2) time
+
+create some_list = {0, 54, 67, 688, 16, 8, 34, 563, 67};
+create temp = 0;
+
+for(create i = 0; i < some_list.size; i++){
+  for(create j = 0; j < some_list.size; j++){
+    if(some_list.at(j) >= some_list.at(j + 1)){
+      temp = some_list.at(j + 1);
+      some_list.at(j + 1) = some_list.at(j);
+      some_list.at(j) = temp; 
+    }
+  }
+}
+
+for(create i = 0; i < some_list.size; i++){
+  print(some_list.at(i), NEW);
+}

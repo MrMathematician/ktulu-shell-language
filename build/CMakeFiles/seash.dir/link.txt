@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/seash.dir/home/elshafei/shell_project/src/main.cpp.o CMakeFiles/seash.dir/home/elshafei/shell_project/src/lexer/adders.cpp.o -o seash

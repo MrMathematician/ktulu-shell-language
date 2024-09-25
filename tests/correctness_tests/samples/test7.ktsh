@@ -1,0 +1,55 @@
+create some_expression = input();
+
+create stack_emulator = {}; // THE WAY YOU ARE GOING TO ADDRESS THE TYPING ISSUE IS THAT YOU ARE GOING TO CREATE TWO 
+                            // EMPTY COPIES UNTIL TYPE IS DETERMINED THROUGH EXPRESSION, AND THEN YOU DELETE THE EXTRA
+create counter = 0;
+
+create num1;
+create num2;
+
+for(create i = 0; i < some_expression.size; i++){
+  switch(some_expression.at(counter)){
+    case "+":
+      num1 = number(stack_emulatorat(counter));
+      stack_emulator.remove_last;
+      counter --;
+      num2 = number(stack_emulator.at(counter));
+      stack_emulator.remove_last;
+      counter --;
+
+      stack_emulator.push(num2 + num1);
+    case "-":
+      num1 = number(stack_emulatorat(counter));
+      stack_emulator.remove_last;
+      counter --;
+      num2 = number(stack_emulator.at(counter));
+      stack_emulator.remove_last;
+      counter --;
+
+      stack_emulator.push(num2 - num1);
+    case "*":
+      num1 = number(stack_emulatorat(counter));
+      stack_emulator.remove_last;
+      counter --;
+      num2 = number(stack_emulator.at(counter));
+      stack_emulator.remove_last;
+      counter --;
+
+      stack_emulator.push(num2 * num1);
+    case "/":
+      num1 = number(stack_emulatorat(counter));
+      stack_emulator.remove_last;
+      counter --;
+      num2 = number(stack_emulator.at(counter));
+      stack_emulator.remove_last;
+      counter --;
+
+      stack_emulator.push(num2 / num1);
+    default:
+      stack_emulator.push(number(some_expression.at(counter)));
+      counter ++;
+ }
+}
+
+print(stack_emulator.at(0));
+

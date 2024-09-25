@@ -1,0 +1,7 @@
+Benchmark 1: ./seash
+  Time (mean ± σ):     869.0 µs ±  75.0 µs    [User: 750.9 µs, System: 371.4 µs]
+  Range (min … max):   669.4 µs … 1226.2 µs    1556 runs
+
+  Warning: Command took less than 5 ms to complete. Note that the results might be inaccurate because hyperfine can not calibrate the shell startup time much more precise than this limit. You can try to use the `-N`/`--shell=none` option to disable the shell completely.
+
+
