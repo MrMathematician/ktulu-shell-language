@@ -148,7 +148,7 @@ private:
   // FUNCTIONS
   std::unordered_map<std::string, std::shared_ptr<FunctionUnit>> functionsMap;
 
-  // STATEMENT TRACKER STACK 
+  // STATEMENT TRACKER STACK // THIS WILL BE REMOVED
   std::stack<std::string> statemenetLevelStack;
   
   // PARSE TREE ROOT

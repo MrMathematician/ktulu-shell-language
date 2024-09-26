@@ -8,7 +8,6 @@ class GrammarChecker{
 public:
   WeakTParser* parser;
 
-  std::shared_ptr<ForUnit> createdUnit;
   intmax_t bracketPolarity = 0;
   virtual void checkGrammar(WeakTParser* parser) {}
 
@@ -21,6 +20,8 @@ public:
 
 class ForGrammarChecker : public GrammarChecker{
 private:
+  std::shared_ptr<ForUnit> createdUnit;
+
   void checkInitialExpression(){
     parser -> updateCurrent();
     if(parser -> currString != "create") exit(0); // ERROR MESSAGE GOES HERE
@@ -60,7 +61,7 @@ private:
     while(bracketPolarity != 0){
       if(parser -> currString == "(") bracketPolarity ++;
       if(parser -> currString == ")") bracketPolarity --;
-      if(bracketPolarity == 0) return;
+      if(!bracketPolarity) return;
 
       createdUnit -> incremenetExpression.push_back(parser -> currToken);
       parser -> updateCurrent();
@@ -70,9 +71,12 @@ private:
 public:
   void checkGrammar(WeakTParser* inputParser) override{
     parser = inputParser;
-    // SET PARENT AND CHILD POINTERS TO CONSTRUCT TREE  
 
     createdUnit = std::make_shared<ForUnit>();
+   
+    parser -> traversalUnit -> codeBody.push_back(createdUnit);
+    parser -> traversalUnit = createdUnit;
+
 
     parser -> statemenetLevelStack.push("for");
 
@@ -90,44 +94,78 @@ public:
   }
 };
 
-class WhileGrammarChecker : public GrammarChecker{
-public:
-  void checkGrammar(WeakTParser* parser) override{
 
+
+class WhileGrammarChecker : public GrammarChecker{
+private:
+  std::shared_ptr<WhileUnit> createdUnit; 
+
+  void checkEndExpression(){
+    while(bracketPolarity != 0){
+      if(parser -> currString == "(") bracketPolarity ++;
+      if(parser -> currString == ")") bracketPolarity --;
+      if(!bracketPolarity) return;
+
+      createdUnit -> endExpression.push_back(parser -> currToken);
+      parser -> updateCurrent();
+    }
+  }
+
+public:
+  void checkGrammar(WeakTParser* inputParser) override{
+    parser = inputParser;
+
+    createdUnit = std::make_shared<WhileUnit>();
+   
+    parser -> traversalUnit -> codeBody.push_back(createdUnit);
+    parser -> traversalUnit = createdUnit;
+
+
+    parser -> statemenetLevelStack.push("while");
+
+    parser -> updateCurrent();
+    if(parser -> currString == "(") bracketPolarity ++;
+    else exit(0); // ERROR MESSAGE GOES HERE
+
+    checkEndExpression();
+
+    parser -> updateCurrent();
+
+    if(parser -> currString != "{") exit(0); // ERROR MESSAGE GOES HERE
   }
 };
 
 class IfGrammarChecker : public GrammarChecker{
 public:
-  void checkGrammar(WeakTParser* parser) override{
+  void checkGrammar(WeakTParser* inputParser) override{
 
   }
 };
 
 class FunctionGrammarChecker : public GrammarChecker{
 public:
-  void checkGrammar(WeakTParser* parser) override{
+  void checkGrammar(WeakTParser* inputParser) override{
 
   }
 };
 
 class VariableDeclarationChecker : public GrammarChecker{
 public:
-  void checkGrammar(WeakTParser* parser) override{
+  void checkGrammar(WeakTParser* inputParser) override{
 
   }
 };
 
 class VariableMutationChecker : public GrammarChecker{
 public:
-  void checkGrammar(WeakTParser* parser) override{
+  void checkGrammar(WeakTParser* inputParser) override{
 
   }
 };
 
 class SwitchGrammarChecker : public GrammarChecker{
 public:
-  void checkGrammar(WeakTParser* parser) override{
+  void checkGrammar(WeakTParser* inputParser) override{
 
   }
 };

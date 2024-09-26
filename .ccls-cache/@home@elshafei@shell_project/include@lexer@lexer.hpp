@@ -353,7 +353,7 @@ public:
     }
   }
 
-  void logTokenizedOutput(std::string filePath){
+  void logTokenizedOutput(std::string& filePath){
     std::ofstream outputFile(filePath, std::ios::trunc);
 
     if(outputFile.is_open()){
