@@ -91,6 +91,7 @@ public:
     parser -> updateCurrent();
     
     if(parser -> currString != "{") exit(0); // ERROR MESSAGE GOES HERE
+    parser -> updateCurrent();
   }
 };
 
@@ -132,13 +133,35 @@ public:
     parser -> updateCurrent();
 
     if(parser -> currString != "{") exit(0); // ERROR MESSAGE GOES HERE
+    parser -> updateCurrent();
   }
 };
 
 class IfGrammarChecker : public GrammarChecker{
+private: 
+  std::shared_ptr<IfUnit> createdUnit;
+
+  void checkIfCondition(){
+
+  }
 public:
   void checkGrammar(WeakTParser* inputParser) override{
+    parser = inputParser;
 
+    createdUnit = std::make_shared<IfUnit>();
+
+    parser -> traversalUnit -> codeBody.push_back(createdUnit);
+    parser -> traversalUnit = createdUnit;
+
+    parser -> statemenetLevelStack.push("if");
+
+    parser -> updateCurrent();
+    if(parser -> currString == "(") bracketPolarity ++;
+    else exit(0); // ERROR MESSAGE GOES HERE
+
+    checkIfCondition();
+
+    
   }
 };
 

@@ -77,6 +77,16 @@ public:
   std::vector<std::shared_ptr<Token>> conditionExpression; 
 };
 
+class ElseIfUnit : public CodeUnit{
+public:
+  std::vector<std::shared_ptr<Token>> conditionExpression;
+};
+
+class ElseUnit : public CodeUnit{
+public:
+  std::vector<std::shared_ptr<Token>> conditionExpression;
+};
+
 class SwitchUnit : public CodeUnit{
 public:
   std::vector<std::shared_ptr<Token>> jumpExpression;
