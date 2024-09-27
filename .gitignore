@@ -1,9 +1,9 @@
 build/CMakeFiles/
-build/cmake_install.cmake/
-build/CMakeCache.txt/
+build/cmake_install.cmake
+build/CMakeCache.txt
 build/performance_records/
-build/compile_logs/
-build/Makefile/
+build/compile_logs
+build/Makefile
 
 versions/
 resources/

@@ -1,3 +1,0 @@
-/home/elshafei/shell_project/build/CMakeFiles/seash.dir
-/home/elshafei/shell_project/build/CMakeFiles/edit_cache.dir
-/home/elshafei/shell_project/build/CMakeFiles/rebuild_cache.dir
