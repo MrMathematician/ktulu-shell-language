@@ -1,19 +1,12 @@
-bin/
-lib/
-
-build/CMakeFiles
-build/cmake_install.cmake
-build/CMakeCache.txt
-build/performance_records
-build/compile_logs
-build/Makefile
+build/CMakeFiles/
+build/cmake_install.cmake/
+build/CMakeCache.txt/
+build/performance_records/
+build/compile_logs/
+build/Makefile/
 
 versions/
 resources/
 
-misc/
-.cache/
 .ccls-cache/
-screenshots/
-widgets.qss
 
