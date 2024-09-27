@@ -1,0 +1,8 @@
+DEVELOPER NOTES:
+
+MODIFICATIONS THAT WERE MADE
+
+###############################
+
+1- The lexer was completely refactored and rewritten due to faulty and unspecified behavior in the older version.
+2- Part of the parser was finished.

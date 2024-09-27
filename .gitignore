@@ -1,0 +1,8 @@
+bin/
+lib/
+build/
+misc/
+.cache/
+.ccls-cache/
+screenshots/
+widgets.qss

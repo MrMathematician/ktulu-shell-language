@@ -34,13 +34,9 @@ extern RulesContainerSingelton& rulesContainerSingeltonObject;
 
 class CodeUnit{
 public:
+  std::string unitName;
   std::shared_ptr<CodeUnit> parent;
   std::deque<std::shared_ptr<CodeUnit>> codeBody; 
-
-  friend class FunctionUnit;
-  friend class ForUnit;
-  friend class WhileUnit;
-  friend class IfUnit; 
 };
 
 class FunctionUnit : public CodeUnit{
@@ -142,7 +138,10 @@ private:
   friend class WhileGrammarChecker;
   friend class ForGrammarChecker;
   friend class IfGrammarChecker;
+  friend class ElseIfGrammarChecker;
+  friend class ElseGrammarChecker;
   friend class FunctionGrammarChecker;
+  friend class SwitchGrammarChecker; 
 
   // TOKENSTREAM_PTR
   std::deque<std::shared_ptr<Token>>* tokenStream;

@@ -73,6 +73,7 @@ public:
     parser = inputParser;
 
     createdUnit = std::make_shared<ForUnit>();
+    createdUnit -> unitName = "for";
    
     parser -> traversalUnit -> codeBody.push_back(createdUnit);
     parser -> traversalUnit = createdUnit;
@@ -102,6 +103,8 @@ private:
   std::shared_ptr<WhileUnit> createdUnit; 
 
   void checkEndExpression(){
+    parser -> updateCurrent();
+
     while(bracketPolarity != 0){
       if(parser -> currString == "(") bracketPolarity ++;
       if(parser -> currString == ")") bracketPolarity --;
@@ -117,6 +120,7 @@ public:
     parser = inputParser;
 
     createdUnit = std::make_shared<WhileUnit>();
+    createdUnit -> unitName = "while";
    
     parser -> traversalUnit -> codeBody.push_back(createdUnit);
     parser -> traversalUnit = createdUnit;
@@ -137,18 +141,33 @@ public:
   }
 };
 
+
+
 class IfGrammarChecker : public GrammarChecker{
 private: 
   std::shared_ptr<IfUnit> createdUnit;
 
   void checkIfCondition(){
+    parser -> updateCurrent();
+
+    while(bracketPolarity != 0){
+      if(parser -> currString == "(") bracketPolarity ++;
+      if(parser -> currString == ")") bracketPolarity --;
+      if(!bracketPolarity) return;
+
+      createdUnit -> conditionExpression.push_back(parser -> currToken);
+      parser -> updateCurrent();
+    }
+
 
   }
+
 public:
   void checkGrammar(WeakTParser* inputParser) override{
     parser = inputParser;
 
     createdUnit = std::make_shared<IfUnit>();
+    createdUnit -> unitName = "if";
 
     parser -> traversalUnit -> codeBody.push_back(createdUnit);
     parser -> traversalUnit = createdUnit;
@@ -160,9 +179,57 @@ public:
     else exit(0); // ERROR MESSAGE GOES HERE
 
     checkIfCondition();
-
     
+    parser -> updateCurrent();
+
+    if(parser -> currString != "{") exit(0); // ERROR MESSAGE GOES HERE
+  
+    parser -> updateCurrent();
   }
+};
+
+class ElseGrammarChecker : public GrammarChecker{
+private: 
+  std::shared_ptr<IfUnit> createdUnit;
+
+  void checkIfCondition(){
+    parser -> updateCurrent();
+
+    while(bracketPolarity != 0){
+      if(parser -> currString == "(") bracketPolarity ++;
+      if(parser -> currString == ")") bracketPolarity --;
+      if(!bracketPolarity) return;
+
+      createdUnit -> conditionExpression.push_back(parser -> currToken);
+      parser -> updateCurrent();
+    }
+  }
+
+public:
+  void checkGrammar(WeakTParser* inputParser) override{
+    parser = inputParser;
+
+    createdUnit = std::make_shared<ElseUnit>();
+    createdUnit -> unitName = "if";
+
+    parser -> traversalUnit -> codeBody.push_back(createdUnit);
+    parser -> traversalUnit = createdUnit;
+
+    parser -> statemenetLevelStack.push("if");
+
+    parser -> updateCurrent();
+    if(parser -> currString == "(") bracketPolarity ++;
+    else exit(0); // ERROR MESSAGE GOES HERE
+
+    checkIfCondition();
+    
+    parser -> updateCurrent();
+
+    if(parser -> currString != "{") exit(0); // ERROR MESSAGE GOES HERE
+  
+    parser -> updateCurrent();
+  }
+ 
 };
 
 class FunctionGrammarChecker : public GrammarChecker{
