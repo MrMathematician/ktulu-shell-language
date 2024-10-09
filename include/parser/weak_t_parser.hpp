@@ -120,6 +120,7 @@ public:
   void parse(){
     parseTreeRoot = std::make_shared<CodeUnit>();
     traversalUnit = parseTreeRoot;
+    traversalUnit -> unitName = "<main>";
     initStatement();
   }
 
@@ -196,7 +197,12 @@ private:
       if(rulesContainerSingeltonObject.grammarSelectorMap.count(currString)){
         rulesContainerSingeltonObject.grammarSelectorMap[currString] -> checkGrammar(this);
         continue;
-      } 
+      }
+      else if(currString == "}"){
+        traversalUnit = traversalUnit -> parent;
+        if(statemenetLevelStack.empty()) exit(0); // ERROR MESSAGE GOES HERE
+        else statemenetLevelStack.pop();
+      }
       else rulesContainerSingeltonObject.grammarSelectorMap["<<<MUTABLE>>>"] -> checkGrammar(this);
     }
   }

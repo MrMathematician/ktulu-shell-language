@@ -188,9 +188,9 @@ public:
   }
 };
 
-class ElseGrammarChecker : public GrammarChecker{
+class ElseIfGrammarChecker : public GrammarChecker{
 private: 
-  std::shared_ptr<IfUnit> createdUnit;
+  std::shared_ptr<ElseIfUnit> createdUnit;
 
   void checkIfCondition(){
     parser -> updateCurrent();
@@ -209,13 +209,15 @@ public:
   void checkGrammar(WeakTParser* inputParser) override{
     parser = inputParser;
 
-    createdUnit = std::make_shared<ElseUnit>();
-    createdUnit -> unitName = "if";
+    if(parser -> traversalUnit -> codeBody.back() -> unitName != "if") exit(0); // ERROR MESSAGE GOES HERE
+
+    createdUnit = std::make_shared<ElseIfUnit>();
+    createdUnit -> unitName = "else if";
 
     parser -> traversalUnit -> codeBody.push_back(createdUnit);
     parser -> traversalUnit = createdUnit;
 
-    parser -> statemenetLevelStack.push("if");
+    parser -> statemenetLevelStack.push("else if");
 
     parser -> updateCurrent();
     if(parser -> currString == "(") bracketPolarity ++;
@@ -229,13 +231,38 @@ public:
   
     parser -> updateCurrent();
   }
- 
+};
+
+class ElseGrammarChecker : public GrammarChecker{
+private:
+  std::shared_ptr<ElseUnit> createdUnit;
+public:
+  void checkGrammar(WeakTParser* inputParser) override{
+    parser = inputParser;
+
+    if(parser -> traversalUnit -> codeBody.back() -> unitName != "if" 
+    || parser -> traversalUnit -> codeBody.back() -> unitName != "else if") exit(0); // ERROR MESSAGE GOES HERE
+
+    createdUnit = std::make_shared<ElseUnit>();
+    createdUnit -> unitName = "else";
+
+    parser -> traversalUnit -> codeBody.push_back(createdUnit);
+    parser -> traversalUnit = createdUnit;
+
+    parser -> statemenetLevelStack.push("else");
+
+    parser -> updateCurrent();
+
+    if(parser -> currString != "{") exit(0); // ERROR MESSAGE GOES HERE
+  
+    parser -> updateCurrent();
+  }
 };
 
 class FunctionGrammarChecker : public GrammarChecker{
 public:
   void checkGrammar(WeakTParser* inputParser) override{
-
+    parser = inputParser;  
   }
 };
 
