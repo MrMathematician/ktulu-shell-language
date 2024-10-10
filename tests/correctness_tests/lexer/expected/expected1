@@ -1,11 +1,9 @@
-create
 some_var
 =
 5
 ;
 for
 (
-create
 counter
 =
 0

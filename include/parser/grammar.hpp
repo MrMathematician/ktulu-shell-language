@@ -262,9 +262,48 @@ public:
 class FunctionGrammarChecker : public GrammarChecker{
 private:
   std::shared_ptr<FunctionUnit> createdUnit;
+
+  void setArgs(){
+    while(true){
+      if(parser -> currString == ")"){
+        return;
+      }
+      if(parser -> currString == ",") exit(0); // ERROR MESSAGE GOES HERE // USE CURRENT TOKEN TO GET TYPE INSTEAD
+
+    }
+  }
+
+  void checkFunctionValidity(){
+    if(parser -> currString == "(") exit(0); // ERROR MESSAGE GOES HERE
+    
+    parser -> functionsMap[parser -> currString] = createdUnit;
+    parser -> updateCurrent();
+    
+    if(parser -> currString != "(") exit(0); //ERROR MESSAGE GOES HERE
+    parser -> updateCurrent();
+    
+    setArgs();
+
+     
+  }
 public:
   void checkGrammar(WeakTParser* inputParser) override{
     parser = inputParser;  
+
+    createdUnit = std::make_shared<FunctionUnit>();
+    createdUnit -> unitName = "funct";
+    
+    parser -> traversalUnit -> codeBody.push_back(createdUnit);
+    parser -> traversalUnit = createdUnit;
+    
+    parser -> statemenetLevelStack.push("funct");
+
+    parser -> updateCurrent();
+
+    if(parser -> currString != "(") exit(0); // ERROR MESSAGE GOES HERE
+    checkFunctionValidity();
+    
+    parser -> updateCurrent();
   }
 };
 /*
@@ -282,15 +321,28 @@ private:
   std::shared_ptr<VariableUnit> createdUnit;
 public:
   void checkGrammar(WeakTParser* inputParser) override{
+
+    // IT COULD BE A FUNCTION CALL OR A VARIABLE MUTATION OR CREATION
     parser = inputParser;
 
   }
 };
 
 class SwitchGrammarChecker : public GrammarChecker{
+private:
+  std::shared_ptr<SwitchUnit> createdUnit;
 public:
   void checkGrammar(WeakTParser* inputParser) override{
     parser = inputParser;
+  }
+};
+
+class CaseGrammarChecker : public GrammarChecker{
+// COPY THE TRAVERSAL UNIT INTO A TEMP
+// CASE THE TEMP DYNAMICALLY INTO A SWITCH
+// ADD THE CASE TO THE HASHMAP
+public:
+  void checkGrammar(WeakTParser* inputParser) override{
 
   }
 };
@@ -300,4 +352,12 @@ public:
   void checkGrammar(WeakTParser* inputPraser) override{
     parser = inputPraser;
   }
+};
+
+class InputGrammarChecker : public GrammarChecker{
+
+};
+
+class CommandGrammarChecker : public GrammarChecker{
+
 };

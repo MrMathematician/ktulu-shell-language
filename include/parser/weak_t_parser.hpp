@@ -7,7 +7,6 @@
 
 
 
-
 class RulesContainerSingelton{
 private:
   static RulesContainerSingelton globalInstance;
@@ -86,8 +85,10 @@ public:
 class SwitchUnit : public CodeUnit{
 public:
   std::vector<std::shared_ptr<Token>> jumpExpression;
-  std::unordered_map<std::string, std::shared_ptr<CodeUnit>> cases;
+  std::unordered_map<std::shared_ptr<Token>, std::shared_ptr<CodeUnit>> cases;
 };
+
+
 
 
 

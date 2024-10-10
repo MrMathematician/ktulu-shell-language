@@ -946,3 +946,17 @@ public:
     addExternalBuiltinToken();
   }
 };
+
+class InputAdder : AbstractTokenAdder{
+private:
+  void addExternalBuiltinToken(){
+    std::shared_ptr<TokenKeywordBuilder> keywordBuilderObject = std::make_shared<TokenKeywordBuilder>();
+    builtInTokensData.addBuiltinToken("input", keywordBuilderObject);
+  }
+public:
+  InputAdder(){
+    addExternalBuiltinToken();
+  }
+};
+
+

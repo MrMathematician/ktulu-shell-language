@@ -25,5 +25,5 @@ for(i = 0; i < some_list.size; i++){
 }
 
 for(i = 0; i < some_list.size; i++){
-  print(some_list.at(i), NEW);
+  print(some_list.at(i) + " ");
 }

@@ -18,8 +18,9 @@ CaseAdder caseAddObject = CaseAdder(); // case
 ContinueAdder continueAddObject = ContinueAdder();
 BreakAdder breakAddObject = BreakAdder();
 
-// PRINT TO CONSOLE
+// PRINT TO CONSOLE AND TAKE INPUT
 PrintAdder printAddObject = PrintAdder(); // print
+InputAdder inputAddObject = InputAdder();
 
 
 // FUNCTION RETURN
@@ -62,7 +63,7 @@ MinusEqualAdder minusEqualAddObject = MinusEqualAdder(); // -=
 StarStarAdder starStarAddObject = StarStarAdder(); // **
 StarEqualAdder starEqualAddObject = StarEqualAdder();
 PlusEqualAdder plusEqualAddObject = PlusEqualAdder() ; // +=
-
+PercentageAdder percentageAddObject = PercentageAdder(); // %
 
 // BOOLEAN OPERATORS AND KEYWORDS
 NotAdder notAddObject = NotAdder(); // not

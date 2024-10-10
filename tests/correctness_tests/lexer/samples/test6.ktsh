@@ -1,16 +1,21 @@
 some_var = input("WHAT IS YOUR NAME? "); // ONLY OUTPUTS STRINGS
 
 switch(some_var){
-  case "John":
-    print("DAAAAAAAAAAAAAAAAAAAAMN");
-  case "Jimmy":
-    print("COOL NAME");
-  case "Maria":
-    print("HOLY NAME");
-  case "Rosie":
-    print("BEAUTIFUL NAME");
-  default:
-    print("NORMIE NAME");
+  case ("John"){
+    print("John");
+  }
+  case ("Jimmy"){
+    print("Jimmy");
+  }
+  case ("Maria"){
+    print("Maria");
+  }
+  case ("Rosie"){
+    print("Rosie");
+  }
+  default{
+    print(some_var);
+  }
 }
 
 

@@ -73,7 +73,7 @@ class FunctionGrammarAdder{
 private:
   void addGrammar(){
     std::shared_ptr<FunctionGrammarChecker> instance = std::make_shared<FunctionGrammarChecker>();
-    rulesContainerSingeltonObject.addRule("func", instance);
+    rulesContainerSingeltonObject.addRule("funct", instance);
   }
 public:
   FunctionGrammarAdder(){
@@ -103,6 +103,18 @@ private:
   }
 public:
   SwitchGrammarAdder(){
+    addGrammar();
+  }
+};
+
+class CaseGrammarAdder{
+private:
+  void addGrammar(){
+    std::shared_ptr<CaseGrammarChecker> instance = std::make_shared<CaseGrammarChecker>();
+    rulesContainerSingeltonObject.addRule("case", instance); 
+  }
+public:
+  CaseGrammarAdder(){
     addGrammar();
   }
 };

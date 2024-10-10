@@ -9,7 +9,7 @@ num2;
 
 for(i = 0; i < some_expression.size; i++){
   switch(some_expression.at(counter)){
-    case "+":
+    case ("+"){
       num1 = number(stack_emulatorat(counter));
       stack_emulator.remove_last;
       counter --;
@@ -18,7 +18,8 @@ for(i = 0; i < some_expression.size; i++){
       counter --;
 
       stack_emulator.push(num2 + num1);
-    case "-":
+    }
+    case ("-"){
       num1 = number(stack_emulatorat(counter));
       stack_emulator.remove_last;
       counter --;
@@ -27,7 +28,8 @@ for(i = 0; i < some_expression.size; i++){
       counter --;
 
       stack_emulator.push(num2 - num1);
-    case "*":
+    }
+    case ("*"){
       num1 = number(stack_emulatorat(counter));
       stack_emulator.remove_last;
       counter --;
@@ -36,7 +38,8 @@ for(i = 0; i < some_expression.size; i++){
       counter --;
 
       stack_emulator.push(num2 * num1);
-    case "/":
+    }
+    case ("/"){
       num1 = number(stack_emulatorat(counter));
       stack_emulator.remove_last;
       counter --;
@@ -45,10 +48,12 @@ for(i = 0; i < some_expression.size; i++){
       counter --;
 
       stack_emulator.push(num2 / num1);
-    default:
+    }
+    default{
       stack_emulator.push(number(some_expression.at(counter)));
       counter ++;
- }
+    }
+  }
 }
 
 print(stack_emulator.at(0));

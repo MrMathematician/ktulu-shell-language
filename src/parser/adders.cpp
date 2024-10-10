@@ -13,4 +13,5 @@ FunctionGrammarAdder functionGrammarAdder = FunctionGrammarAdder();
 VariableMutationGrammarAdder variableMutationGrammarAdder = VariableMutationGrammarAdder();
 PrintGrammarAdder printGrammarAdder = PrintGrammarAdder();
 SwitchGrammarAdder switchGrammarAdder = SwitchGrammarAdder();
+CaseGrammarAdder caseGrammarAdder = CaseGrammarAdder();
 
