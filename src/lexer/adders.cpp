@@ -88,7 +88,7 @@ ScriptRunAdder scriptRunAddObject = ScriptRunAdder(); // script_run
 
 
 // FOR WEAKLY TYPED
-CreateAdder varAddObject = CreateAdder(); // var 
+//CreateAdder varAddObject = CreateAdder(); // var 
 FunctionAdder functionAddObject = FunctionAdder(); // funct 
 
 // FOR STORNGLY TYPED

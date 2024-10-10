@@ -1,9 +1,9 @@
-create some_list = {0, 54, 67, 688, 16, 8, 34, 563, 67};
-create temp = 0;
+some_list = {0, 54, 67, 688, 16, 8, 34, 563, 67};
+temp = 0;
 
 func bubble_sort(){
-  for(create i = 0; i < some_list.size; i++){
-    for(create j = 0; j < some_list.size; j++){
+  for(i = 0; i < some_list.size; i++){
+    for(j = 0; j < some_list.size; j++){
       if(some_list.at(j) >= some_list.at(j + 1)){
         temp = some_list.at(j + 1);
         some_list.at(j + 1) = some_list.at(j);
@@ -14,7 +14,7 @@ func bubble_sort(){
 }
 
 func display(){
-  for(create i = 0; i < some_list.size; i++){
+  for(i = 0; i < some_list.size; i++){
     print(some_list.at(i), NEW);
   }
 }

@@ -1,13 +1,13 @@
-create some_expression = input();
+some_expression = input();
 
-create stack_emulator = {}; // THE WAY YOU ARE GOING TO ADDRESS THE TYPING ISSUE IS THAT YOU ARE GOING TO CREATE TWO 
+stack_emulator = {}; // THE WAY YOU ARE GOING TO ADDRESS THE TYPING ISSUE IS THAT YOU ARE GOING TO TWO 
                             // EMPTY COPIES UNTIL TYPE IS DETERMINED THROUGH EXPRESSION, AND THEN YOU DELETE THE EXTRA
-create counter = 0;
+counter = 0;
 
-create num1;
-create num2;
+num1;
+num2;
 
-for(create i = 0; i < some_expression.size; i++){
+for(i = 0; i < some_expression.size; i++){
   switch(some_expression.at(counter)){
     case "+":
       num1 = number(stack_emulatorat(counter));

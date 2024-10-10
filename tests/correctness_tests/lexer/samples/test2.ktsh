@@ -1,4 +1,4 @@
-create i = 0;
+i = 0;
 
 // VERY SIMPLE LOOP
 

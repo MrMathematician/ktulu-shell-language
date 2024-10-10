@@ -260,22 +260,29 @@ public:
 };
 
 class FunctionGrammarChecker : public GrammarChecker{
+private:
+  std::shared_ptr<FunctionUnit> createdUnit;
 public:
   void checkGrammar(WeakTParser* inputParser) override{
     parser = inputParser;  
   }
 };
-
+/*
 class VariableDeclarationChecker : public GrammarChecker{
+private:
+  std::shared_ptr<VariableUnit> createdUnit;
 public:
   void checkGrammar(WeakTParser* inputParser) override{
-
+    parser = inputParser;
   }
 };
-
+*/
 class VariableMutationChecker : public GrammarChecker{
+private:
+  std::shared_ptr<VariableUnit> createdUnit;
 public:
   void checkGrammar(WeakTParser* inputParser) override{
+    parser = inputParser;
 
   }
 };
@@ -283,6 +290,14 @@ public:
 class SwitchGrammarChecker : public GrammarChecker{
 public:
   void checkGrammar(WeakTParser* inputParser) override{
+    parser = inputParser;
 
+  }
+};
+
+class PrintGrammarChecker : public GrammarChecker{
+public:
+  void checkGrammar(WeakTParser* inputPraser) override{
+    parser = inputPraser;
   }
 };

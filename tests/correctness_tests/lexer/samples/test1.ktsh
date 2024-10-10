@@ -1,0 +1,5 @@
+some_var = 5;
+
+for(counter = 0; counter < some_var + 5; i++){
+  print(some_var + counter);
+}

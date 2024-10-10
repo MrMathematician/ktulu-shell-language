@@ -15,7 +15,7 @@ private:
     rulesContainerSingeltonObject.addRule("for", instance);
   }
 public:
-  ForGrammarAdder() {
+  ForGrammarAdder(){
     addGrammar();
   }
 };
@@ -27,7 +27,7 @@ private:
     rulesContainerSingeltonObject.addRule("while", instance);
   }
 public:
-  WhileGrammarAdder() {
+  WhileGrammarAdder(){
     addGrammar();
   }
 };
@@ -39,7 +39,32 @@ private:
     rulesContainerSingeltonObject.addRule("if", instance);
   }
 public:
-  IfGrammarAdder() {
+  IfGrammarAdder(){
+    addGrammar();
+  }
+};
+
+
+class ElseIfGrammarAdder{
+private:
+  void addGrammar(){
+    std::shared_ptr<ElseIfGrammarChecker> instance = std::make_shared<ElseIfGrammarChecker>();
+    rulesContainerSingeltonObject.addRule("else if", instance);
+  }
+public:
+  ElseIfGrammarAdder(){
+    addGrammar();
+  }
+};
+
+class ElseGrammarAdder{
+private:
+  void addGrammar(){
+    std::shared_ptr<ElseGrammarChecker> instance = std::make_shared<ElseGrammarChecker>();
+    rulesContainerSingeltonObject.addRule("else", instance);
+  }
+public:
+  ElseGrammarAdder(){
     addGrammar();
   }
 };
@@ -51,11 +76,12 @@ private:
     rulesContainerSingeltonObject.addRule("func", instance);
   }
 public:
-  FunctionGrammarAdder() {
+  FunctionGrammarAdder(){
     addGrammar();
   }
 };
 
+/*
 class VariableDeclarationGrammarAdder{
 private:
   void addGrammar(){
@@ -67,6 +93,7 @@ public:
     addGrammar();
   }
 };
+*/
 
 class SwitchGrammarAdder{
 private:
@@ -75,7 +102,7 @@ private:
     rulesContainerSingeltonObject.addRule("switch", instance); 
   }
 public:
-  SwitchGrammarAdder() {
+  SwitchGrammarAdder(){
     addGrammar();
   }
 };
@@ -89,7 +116,19 @@ private:
     // AND THEREFORE, IT IS USED FOR CASES THAT DO NOT START WITH A KEYWORD
   }
 public:
-  VariableMutationGrammarAdder() {
+  VariableMutationGrammarAdder(){
+    addGrammar();
+  }
+};
+
+class PrintGrammarAdder{
+private:
+  void addGrammar(){
+    std::shared_ptr<PrintGrammarChecker> instance = std::make_shared<PrintGrammarChecker>();
+    rulesContainerSingeltonObject.addRule("print", instance); 
+  }
+public:
+  PrintGrammarAdder(){
     addGrammar();
   }
 };

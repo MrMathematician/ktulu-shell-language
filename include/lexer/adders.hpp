@@ -70,6 +70,7 @@ public:
   }
 };
 
+// THIS WAS NOT INSTANTIATED
 class CreateAdder : AbstractTokenAdder{
 private:
   void addExternalBuiltinToken(){

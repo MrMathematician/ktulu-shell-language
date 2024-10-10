@@ -1,4 +1,4 @@
-create some_var = input("WHAT IS YOUR NAME? "); // ONLY OUTPUTS STRINGS
+some_var = input("WHAT IS YOUR NAME? "); // ONLY OUTPUTS STRINGS
 
 switch(some_var){
   case "John":

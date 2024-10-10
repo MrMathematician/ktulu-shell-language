@@ -1,5 +1,6 @@
-#include "lexer.hpp"
 #pragma once
+#include "lexer.hpp"
+
 
 
 class AbstractTokenAdder{
@@ -68,7 +69,8 @@ public:
     addExternalBuiltinToken();
   }
 };
-
+// WAS REMOVED AS IT WAS SIMPLY UNDEEDED
+/*
 class CreateAdder : AbstractTokenAdder{
 private:
   void addExternalBuiltinToken(){
@@ -80,6 +82,7 @@ public:
     addExternalBuiltinToken();
   }
 };
+*/
 
 class FalseAdder : AbstractTokenAdder{
 private:
