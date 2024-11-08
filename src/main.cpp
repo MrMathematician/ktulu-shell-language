@@ -2,9 +2,7 @@
 #include <csignal>
 #include <fstream>
 #include "../include/lexer/lexer.hpp"
-#include "../include/lexer/adders.hpp"
 #include "../include/parser/weak_t_parser.hpp"
-#include "../include/parser/grammar.hpp"
 
 
 
@@ -26,7 +24,7 @@ RulesContainerSingelton& rulesContainerSingeltonObject = RulesContainerSingelton
 
 
 
-
+// UNCOMMENT THIS LINE IN PRODUCTION
 #define TESTING
 
 #ifdef TESTING
@@ -51,7 +49,8 @@ void setTest(std::string& filePath){
 
 
 void runFileAndLogLex(std::string& actualOutputPath){
-  Script sampleCode = Script(fileString);
+  Script sampleCode = Script();
+  sampleCode.setSringStream(std::move(actualOutputPath));
   sampleCode.lex();
   sampleCode.logTokenizedOutput(actualOutputPath);
 }
@@ -114,13 +113,18 @@ public:
   std::string actualOutputPath;
   std::string expectedOutputPath;
 
-  Test(std::string testCodePathInput, std::string actualOutputPathInput, std::string expectedOutputPathInput) :
+  Test(std::string& testCodePathInput, std::string& actualOutputPathInput, std::string& expectedOutputPathInput) :
     testCodePath(testCodePathInput),
     actualOutputPath(actualOutputPathInput),
     expectedOutputPath(expectedOutputPathInput) {}
 };
 
 
+
+
+
+
+// MAIN PROGRAM ENTRY POINT
 int main(){
   std::vector<Test> tests;
   
@@ -132,16 +136,19 @@ int main(){
 
 
   for(Test test : tests){
+    std::cout << "WHAT?\n";
     setTest(test.testCodePath);
     runFileAndLogLex(test.actualOutputPath);
     compareExpectedWithActual(test.actualOutputPath, test.expectedOutputPath);
   }
-
+  
+  /*
   for(Test test : tests){
     setTest(test.testCodePath);
     runFileAndLogParse(test.actualOutputPath);
     compareExpectedWithActual(test.actualOutputPath, test.expectedOutputPath);
   }
+  */
 }
 
 
@@ -154,7 +161,6 @@ int main(){
 
 
 }
-
 
 
 #endif

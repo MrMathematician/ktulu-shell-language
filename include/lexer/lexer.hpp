@@ -314,7 +314,7 @@ private:
   size_t counterIndex = 0;
   size_t lineCounter = 1;
 
-  std::string& stringBuffer;
+  std::string stringBuffer;
 
   std::deque<std::shared_ptr<Token>> tokenizedOutput; 
 
@@ -343,7 +343,11 @@ public:
     classifyToNums();
   }
 
-  Script(std::string& newStringBuffer) : stringBuffer(newStringBuffer) {}  
+  Script(){};  
+
+  void setSringStream(std::string&& inputStringBuffer){
+    stringBuffer = std::move(inputStringBuffer);
+  }
   
   // EXISTS ONLY FOR INTERPRETER DEBUGGING 
   void displayTokenizedOutput(){
@@ -371,10 +375,6 @@ public:
 
 
   
-  std::string getStringBuffer(){
-    return stringBuffer;  
-  }
-
   std::deque<std::shared_ptr<Token>>* getTokenDequePointer(){
     return &tokenizedOutput;
   }
@@ -438,7 +438,6 @@ private:
 
   void firstPhaseStartState(){
     if(counterIndex >= stringBuffer.length()){
-      //counterIndex = 0;
       return;
     }
 

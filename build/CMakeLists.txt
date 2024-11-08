@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.30.2)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 project(seash)
 
 set(FullOutputDir "$({CMAKE_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})")
@@ -21,4 +23,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC
     ${PROJECT_SOURCE_DIR}/include/parser
     ${PROJECT_SOURCE_DIR}/include/logger
 )
+
 
