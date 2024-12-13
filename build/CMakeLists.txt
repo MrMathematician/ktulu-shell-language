@@ -4,6 +4,10 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(seash)
 
+#if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+#  add_compile_options(-Winline -fdump-tree-optimized)
+#endif()
+
 set(FullOutputDir "$({CMAKE_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})")
 
 # Specify the C++ standard

@@ -1,7 +1,7 @@
-#pragma once
 #include <bits/stdc++.h>
 #include "../logger/logger.hpp" 
 
+#pragma once
 
 enum class tokenType{
   KEYWORD,
@@ -104,7 +104,7 @@ private:
   size_t lineOccurence;
 
 public:
-  Token(std::string newTokenString){
+  Token(std::string newTokenString){ // THIS PART NEEDS TO BE OPTIMIZED USING std::move() in the near future
     tokenString = newTokenString; 
   }
 

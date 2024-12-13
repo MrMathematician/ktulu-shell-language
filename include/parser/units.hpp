@@ -59,7 +59,10 @@ public:
   std::unordered_map<std::shared_ptr<Token>, std::shared_ptr<CodeUnit>> cases;
 };
 
+class PrintUnit : public CodeUnit{
+public:
+  std::vector<std::shared_ptr<Token>> printExpression;
+};
 
-
-
+class InputUnit : public CodeUnit{};
 

@@ -416,11 +416,13 @@ private:
 
   void setArgs(){
     while(true){
-      if(parser -> currString == ")"){
-        return;
-      }
+      if(parser -> currString == ")") return;
+      
       if(parser -> currString == ",") exit(0); // ERROR MESSAGE GOES HERE // USE CURRENT TOKEN TO GET TYPE INSTEAD
       // CONTINUE HERE
+      parser -> updateCurrent();
+      if(parser -> currToken -> getTokenGeneralType() == )
+      
     }
   }
 
