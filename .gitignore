@@ -20,6 +20,12 @@ resources/
 .ccls-cache/
 .cache/
 
+doc/proposal/shellProposal.aux  
+doc/proposal/shellProposal.dvi  
+doc/proposal/shellProposal.log
+doc/proposal/shellProposal.tex  
+doc/proposal/texput.log
+
 opportunity.txt
 code_review.txt
 VERY_IMPORTANT.txt

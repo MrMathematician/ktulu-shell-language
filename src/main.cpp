@@ -52,7 +52,7 @@ void takeFileInput(){
 void runTests(){
   Interpreter interpreter = Interpreter();
   for(int i = 0; i < tests.size(); i++){
-    std::ofstream file(OUTPUT_DIR + std::to_string(i) + ".txt");
+    std::ofstream file(OUTPUT_DIR + std::to_string(i + 1) + ".txt");
 
     interpreter.tokenize(std::move(tests.at(i)));
 
