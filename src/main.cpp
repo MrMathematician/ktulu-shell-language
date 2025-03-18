@@ -1,9 +1,6 @@
 #include <bits/stdc++.h>
-#include <csignal>
 #include <fstream>
-#include "../include/lexer/lexer.hpp"
-#include "../include/parser/weak_t_parser.hpp"
-
+#include "../include/interpreter/interpreter.hpp"
 
 
 // LEXER DEFINED SINGELTONS
@@ -19,136 +16,67 @@ TokenEnumStringMap& tokenClassStringMapGlobalInstance = TokenEnumStringMap :: ge
 
 
 // PARSER DEFINED SINGELTONS
-RulesContainerSingelton RulesContainerSingelton :: globalInstance;
-RulesContainerSingelton& rulesContainerSingeltonObject = RulesContainerSingelton :: getGlobalInstance();
+// RulesContainerSingelton RulesContainerSingelton :: globalInstance;
+// RulesContainerSingelton& rulesContainerSingeltonObject = RulesContainerSingelton :: getGlobalInstance();
 
 
 
-// UNCOMMENT THIS LINE IN PRODUCTION
+// COMMENT THIS LINE IN PRODUCTION
 #define TESTING
+
+#define TEST_DIR "/home/elshafei/archive/projects/shell_project/tests/correctness_tests/lexer/samples/test"
+#define OUTPUT_DIR "/home/elshafei/archive/projects/shell_project/tests/correctness_tests/lexer/actual/out"
+
+const int START_TEST = 1;
+const int END_TEST = 11;
 
 #ifdef TESTING
 
-std::string fileString;
+std::vector<std::string> tests;
 
-void setTest(std::string& filePath){
-  std::ifstream testFile(filePath);
-  std::string lineString;
+void takeFileInput(){
+  for(int i = START_TEST; i < END_TEST; i++){
+    std::ifstream file(TEST_DIR + std::to_string(i) + ".ktsh");
 
-  if(testFile.is_open()){
-    while(std::getline(testFile, lineString)){
-      fileString += lineString; 
+    if(file){
+      std::cout << "Loaded test number " << i << '\n';
+      std::stringstream buffer;
+      buffer << file.rdbuf();
+      tests.push_back(buffer.str());
+      file.close();
     }
-    testFile.close();
+    else std::cout << "Error occurred, file not found!\n";
   }
-  else{
-    std::cout << "File path or name is incorrect >> " << filePath << std::endl;
+}
+
+void runTests(){
+  Interpreter interpreter = Interpreter();
+  for(int i = 0; i < tests.size(); i++){
+    std::ofstream file(OUTPUT_DIR + std::to_string(i) + ".txt");
+
+    interpreter.tokenize(std::move(tests.at(i)));
+
+    file << interpreter.recreateDiscrete();
+    //interpreter.outputTokenStream();
+
+    
+
+    std::cout << "Finished test " << i + 1 << '\n';
+
+    interpreter.reset();
   }
 }
 
 
 
-void runFileAndLogLex(std::string& actualOutputPath){
-  Script sampleCode = Script();
-  sampleCode.setSringStream(std::move(actualOutputPath));
-  sampleCode.lex();
-  sampleCode.logTokenizedOutput(actualOutputPath);
-}
-
-void runFileAndLogParse(std::string& actualOutputPath){
-  
-}
-
-
-
-void compareExpectedWithActual(std::string& actualOutputPath, std::string& expectedOutputPath){
-  std::ifstream actual(actualOutputPath);
-  std::ifstream expected(expectedOutputPath);
-
-  std::string lineActual;
-  std::string lineExpected;
-
-  std::string actualString;
-  std::string expectedString;
-
-
-  if(!actual.is_open()){
-    std::cout << "Actual output file path is incorrect >> " << actualOutputPath << std::endl;
-  }
-  if(!expected.is_open()){
-    std::cout << "Expected output file path is incorrect >> " << expectedOutputPath << std::endl;
-  }
-
-  while(std::getline(actual, lineActual)){
-    actualString += lineActual;
-  }
-  while(std::getline(expected, lineExpected)){
-    expectedString += lineExpected;
-  }
-
-  if(actualString.size() != expectedString.size()){
-    std::cout << "Size is not even the same!\n";
-  }
-  
-  
-  int lineCounter = 0;
-  for(size_t i = 0; i < actualString.size(); i++){
-    if(actualString.at(i) == '\n') lineCounter ++;
-
-    if(actualString.at(i) != expectedString.at(i)){
-      std::cout << "Test <<" << actualOutputPath << ">> FAILED at line: " << lineCounter << std::endl;
-      return;
-    }
-  }
-  std::cout << "Test <<" << actualOutputPath << ">> SUCCEEDED" << lineCounter << std::endl;
-}
-
-
-
-
-
-class Test{
-public:
-  std::string testCodePath;
-  std::string actualOutputPath;
-  std::string expectedOutputPath;
-
-  Test(std::string& testCodePathInput, std::string& actualOutputPathInput, std::string& expectedOutputPathInput) :
-    testCodePath(testCodePathInput),
-    actualOutputPath(actualOutputPathInput),
-    expectedOutputPath(expectedOutputPathInput) {}
-};
-
-
-
-
-
-
-// MAIN PROGRAM ENTRY POINT
 int main(){
-  std::vector<Test> tests;
-  
+  std::cout << "Initializing Tests ...\n";
 
-  // TESTS ARE ADDED HERE
-  //tests.push_back(Test());
-  //tests.push_back(Test());
-  //tests.push_back(Test());
+  takeFileInput();
+  runTests();
 
-
-  for(Test test : tests){
-    std::cout << "WHAT?\n";
-    setTest(test.testCodePath);
-    runFileAndLogLex(test.actualOutputPath);
-    compareExpectedWithActual(test.actualOutputPath, test.expectedOutputPath);
-  }
-  
-  /*
-  for(Test test : tests){
-    setTest(test.testCodePath);
-    runFileAndLogParse(test.actualOutputPath);
-    compareExpectedWithActual(test.actualOutputPath, test.expectedOutputPath);
-  }
-  */
+  std::cout << "Generated Successfully!\n\n";
+  std::cout << "Check /home/elshafei/archive/projects/shell_project/tests/correctness_tests/lexer/actual/\n";
 }
 
 

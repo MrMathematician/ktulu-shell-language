@@ -1,4 +1,6 @@
 #include <bits/stdc++.h>
+#include <sstream>
+#include <string>
 #include "../logger/logger.hpp" 
 
 #pragma once
@@ -37,7 +39,7 @@ enum class tokenType{
 class TokenEnumStringMap{
 private:
   static TokenEnumStringMap globalInstance;
-  std::unordered_map<tokenType, const char*> tokenEnumStringMap; // CONST CHAR MAY CAUSE AN ERROR HERE (IT DIDN'T)
+  std::unordered_map<tokenType, std::string> tokenEnumStringMap; // CONST CHAR MAY CAUSE AN ERROR HERE (IT DIDN'T)
 
   TokenEnumStringMap(){
     tokenEnumStringMap[tokenType :: KEYWORD] = "KEYWORD";
@@ -110,7 +112,9 @@ public:
 
   Token(){}
 
-
+  void getInputStream(std::string&& inputStream){
+    tokenString = std::move(inputStream);
+  }
    
   void setTokenGeneralType(tokenType newTokenGeneralType){
     tokenGeneralType = newTokenGeneralType;
@@ -120,7 +124,7 @@ public:
     tokenSpecificType = newTokenSpecificType;
   }
 
-  void setTokenString(std::string newTokenString){
+  void setTokenString(std::string& newTokenString){
     tokenString = newTokenString;
   }
 
@@ -165,9 +169,9 @@ public:
 
 class AbstractTokenBuilder{
 public:
-  virtual void buildTokenPars(const char* someName, long unsigned int lineOccurence, std::shared_ptr<Token> someToken) = 0;
+  virtual void buildTokenPars(std::string& someName, long unsigned int lineOccurence, std::shared_ptr<Token> someToken) = 0;
 
-  std::shared_ptr<Token> getToken(const char* tokenName){  
+  std::shared_ptr<Token> getToken(std::string& tokenName){  
     std::shared_ptr<Token> tokenProduct = std::make_shared<Token>(tokenName);
     return tokenProduct; 
   }
@@ -183,7 +187,7 @@ public:
 
 
 class TokenStringBuilder : public AbstractTokenBuilder{
-  void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
+  void buildTokenPars(std::string& tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
     tokenProduct -> setTokenString(tokenName);
     tokenProduct -> setTokenGeneralType(tokenType :: STRING);
     tokenProduct -> setLineOccurence(lineOccurence);
@@ -191,7 +195,7 @@ class TokenStringBuilder : public AbstractTokenBuilder{
 };
 
 class TokenLiteralBuilder : public AbstractTokenBuilder{
-  void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
+  void buildTokenPars(std::string& tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
     tokenProduct -> setTokenString(tokenName);
     tokenProduct -> setTokenGeneralType(tokenType :: LITERAL);
     tokenProduct -> setLineOccurence(lineOccurence);
@@ -199,7 +203,7 @@ class TokenLiteralBuilder : public AbstractTokenBuilder{
 };
 
 class TokenSeparatorBuilder : public AbstractTokenBuilder{
-  void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
+  void buildTokenPars(std::string& tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
     tokenProduct -> setTokenString(tokenName);
     tokenProduct -> setTokenGeneralType(tokenType :: SEPARATOR);
     tokenProduct -> setLineOccurence(lineOccurence);
@@ -207,7 +211,7 @@ class TokenSeparatorBuilder : public AbstractTokenBuilder{
 };
 
 class TokenOperatorBuilder : public AbstractTokenBuilder{
-void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
+  void buildTokenPars(std::string& tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
     tokenProduct -> setTokenString(tokenName);
     tokenProduct -> setTokenGeneralType(tokenType :: OPERATOR);
     tokenProduct -> setLineOccurence(lineOccurence);
@@ -215,7 +219,7 @@ void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr
 };
 
 class TokenKeywordBuilder : public AbstractTokenBuilder{
-void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
+void buildTokenPars(std::string& tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
     tokenProduct -> setTokenString(tokenName);
     tokenProduct -> setTokenGeneralType(tokenType :: KEYWORD);
     tokenProduct -> setLineOccurence(lineOccurence);
@@ -223,7 +227,7 @@ void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr
 };
 
 class TokenConstantBuilder : public AbstractTokenBuilder{
-void buildTokenPars(const char* tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
+void buildTokenPars(std::string& tokenName, size_t lineOccurence, std::shared_ptr<Token> tokenProduct) override{
     tokenProduct -> setTokenString(tokenName);
     tokenProduct -> setTokenGeneralType(tokenType :: CONSTANT);
     tokenProduct -> setLineOccurence(lineOccurence);
@@ -241,8 +245,9 @@ private:
  
 public:
   // CREATING A NORMAL TOKEN FOR LITERALS
-  std::shared_ptr<Token> buildToken(const char* tokenName, int lineOccurrence, std::shared_ptr<AbstractTokenBuilder> someBuilder){
+  std::shared_ptr<Token> buildToken(std::string& tokenName, int lineOccurrence, std::shared_ptr<AbstractTokenBuilder> someBuilder){
     auto createdToken = someBuilder -> getToken();
+    //std::cout << "Token Name: " << tokenName << '\n';
     someBuilder -> buildTokenPars(tokenName, lineOccurrence, createdToken);
     return createdToken;
   }
@@ -273,19 +278,22 @@ public:
     return globalInstance;
   }
  
-  void addBuiltinToken(const char* tokenBuiltinName, std::shared_ptr<AbstractTokenBuilder> tokenBuiltinBuilder){ // THIS MAY CAUSE THE INPUT TO GO UNDETECTED
+  void addBuiltinToken(std::string tokenBuiltinName, std::shared_ptr<AbstractTokenBuilder> tokenBuiltinBuilder){ // THIS MAY CAUSE THE INPUT TO GO UNDETECTED
+    //std::cout << tokenBuiltinName << " " << "HEEEEEEEEEEEREEEEEEEEEEEEE\n";
     specialTokensMap[tokenBuiltinName] = tokenBuiltinBuilder;
   }
 
-  bool isExists(const char* tokenString){
+  bool isExists(std::string tokenString){
     //std::cout << "This is the string that is to be analyzed: "<< tokenString << '\n';
+    //std::cout << "MAP HAS A SIZE OF " << specialTokensMap.size() << "\n";
     if(specialTokensMap.count(tokenString)){
       return true;
     }
+    //std::cout << tokenString << " is not an operator or separator\n";
     return false;
   }
 
-  std::shared_ptr<AbstractTokenBuilder> getTokenBuiltinBuilder(const char* tokenString){
+  std::shared_ptr<AbstractTokenBuilder> getTokenBuiltinBuilder(std::string& tokenString){
     if(specialTokensMap.count(tokenString)){
       return specialTokensMap[tokenString];
     }
@@ -321,7 +329,7 @@ private:
 public:
   void lex(){
     firstPhaseLex();   // CLASSIFIES INTO (LITERALS, SEPARATORS, OPERATORS, STRINGS)
-    secondPhaseLex();  // REMOVES COMMENTS
+    //secondPhaseLex();  // REMOVES COMMENTS
     thirdPhaseLex();   // CLASSIFIES KEYWORDS 
     fourthPhaseLex();  // NUMBER CREATOR
     fifthPhaseLex();   // MERGER
@@ -331,11 +339,11 @@ public:
     firstPhaseStartState();
   }
 
-  void secondPhaseLex(){
-    counterIndex = 0;
-    secondPhaseStartState();
-  }
-
+  //void secondPhaseLex(){
+  //  counterIndex = 0;
+  //  secondPhaseStartState();
+  //}
+  
   void thirdPhaseLex(){
     classifyKeywords();
   }
@@ -345,8 +353,9 @@ public:
 
   Script(){};  
 
-  void setSringStream(std::string&& inputStringBuffer){
+  void setInputAndTokenStream(std::string&& inputStringBuffer, std::deque<std::shared_ptr<Token>>&& tokenStream){
     stringBuffer = std::move(inputStringBuffer);
+    tokenizedOutput = std::move(tokenStream);
   }
   
   // EXISTS ONLY FOR INTERPRETER DEBUGGING 
@@ -367,7 +376,7 @@ public:
       outputFile.close();
     }
     else{
-      std::cout << "File name or path is incorrect >> " << filePath << std::endl;; 
+      std::cout << "File name or path is incorrect >> " << filePath << std::endl;
     }
   }
 
@@ -375,8 +384,8 @@ public:
 
 
   
-  std::deque<std::shared_ptr<Token>>* getTokenDequePointer(){
-    return &tokenizedOutput;
+  std::deque<std::shared_ptr<Token>> getTokenDeque(){
+    return std::move(tokenizedOutput);
   }
 
 
@@ -408,18 +417,20 @@ private:
   
 
   void createAndAddOperatorOrSeparatorPhase1(){
-    std::shared_ptr<AbstractTokenBuilder> tempBuilder = builtInTokensData.getTokenBuiltinBuilder(std::string(1, stringBuffer[counterIndex]).c_str());
-    tokenizedOutput.push_back(directorObject.buildToken(std::string(1, stringBuffer[counterIndex]).c_str(), getStandingLine(), tempBuilder));
+    if(counterIndex >= stringBuffer.size()) return;
+    std::string temp = std::string(1, stringBuffer[counterIndex]);
+    std::shared_ptr<AbstractTokenBuilder> tempBuilder = builtInTokensData.getTokenBuiltinBuilder(temp);
+    tokenizedOutput.push_back(directorObject.buildToken(temp, getStandingLine(), tempBuilder));
   }
 
   void createAndAddLiteralTokenPhase1(){
     std::shared_ptr<AbstractTokenBuilder> tempBuilder = std::make_shared<TokenLiteralBuilder>();
-    tokenizedOutput.push_back(directorObject.buildToken(tempStringPhase1.c_str(), getStandingLine(), tempBuilder));
+    tokenizedOutput.push_back(directorObject.buildToken(tempStringPhase1, getStandingLine(), tempBuilder));
   }
 
   void createAndAddStringTokenPhase1(){
     std::shared_ptr<TokenStringBuilder> tempBuilder = std::make_shared<TokenStringBuilder>();
-    tokenizedOutput.push_back(directorObject.buildToken(tempStringPhase1.c_str(), getStandingLine(), tempBuilder));
+    tokenizedOutput.push_back(directorObject.buildToken(tempStringPhase1, getStandingLine(), tempBuilder));
   }
 
 
@@ -427,14 +438,15 @@ private:
   
 
   bool returnTrueIfSeparatorOrOperator(){
-    const char currChar = stringBuffer[counterIndex];
-    if(builtInTokensData.isExists(&currChar)){
+    std::string currChar = std::string(1, stringBuffer[counterIndex]);
+    if(builtInTokensData.isExists(currChar)){
       return true;
     }
+    //std::cout << stringBuffer[counterIndex] << " is not an operator or separator.\n";
     return false;
   }
 
-
+  bool isComment = false;
 
   void firstPhaseStartState(){
     if(counterIndex >= stringBuffer.length()){
@@ -442,9 +454,14 @@ private:
     }
 
     if(stringBuffer[counterIndex] == '/'){
-      createAndAddOperatorOrSeparatorPhase1();
+      if(counterIndex + 1 < stringBuffer.size() 
+        && (stringBuffer[counterIndex + 1] == '/' 
+        || stringBuffer[counterIndex + 1] == '*')) commentState();
+      //std::cout << "or this one?\n";
+      if(!isComment) createAndAddOperatorOrSeparatorPhase1();
+      isComment = false;
       counterIndex ++;
-      firstPhaseLiteralState();
+      firstPhaseStartState();
     }
     else if(stringBuffer[counterIndex] == '*'){
       createAndAddOperatorOrSeparatorPhase1();
@@ -474,7 +491,7 @@ private:
   }
 
 
-
+  
 
 
   void firstPhaseLiteralState(){
@@ -483,13 +500,21 @@ private:
     }
 
     if(stringBuffer[counterIndex] == '/'){
+      if(counterIndex + 1 < stringBuffer.size() 
+        && (stringBuffer[counterIndex + 1] == '/' 
+        || stringBuffer[counterIndex + 1] == '*')) commentState();
+      
       createAndAddLiteralTokenPhase1();
-      createAndAddOperatorOrSeparatorPhase1();
+      //std::cout << "this path?\n";
+      if(!isComment) createAndAddOperatorOrSeparatorPhase1();
+      isComment = false;
       counterIndex ++;
       tempStringPhase1 = "";
       firstPhaseStartState();
+      
     }
     else if(stringBuffer[counterIndex] == '*'){
+      //std::cout << "path 6\n";
       createAndAddLiteralTokenPhase1();
       createAndAddOperatorOrSeparatorPhase1();
       counterIndex ++;
@@ -515,6 +540,7 @@ private:
       firstPhaseStartState();
     }
     else if(returnTrueIfSeparatorOrOperator()){
+      //std::cout << "path 7\n";
       createAndAddLiteralTokenPhase1();
       createAndAddOperatorOrSeparatorPhase1();
       counterIndex ++;
@@ -522,15 +548,36 @@ private:
       firstPhaseStartState();
     }
     else{
+      //std::cout << stringBuffer[counterIndex] << '\n';
       tempStringPhase1.push_back(stringBuffer[counterIndex]);
       counterIndex ++;
       firstPhaseLiteralState();
     }
   }
 
+  
 
 
 
+  void commentState(){
+    if(stringBuffer[counterIndex + 1] == '*'){
+      counterIndex ++;
+      counterIndex ++;
+      while(counterIndex + 1 < stringBuffer.size()){
+        if(stringBuffer[counterIndex] == '*' && stringBuffer[counterIndex + 1] == '/') break;
+        counterIndex ++;
+      }
+    }
+    else{
+      while(counterIndex < stringBuffer.size() && stringBuffer[counterIndex] != '\n') counterIndex ++;
+    }
+    //std::cout << "out of comment\n";
+    isComment = true;
+  }
+
+
+
+  
 
   void firstPhaseStringState(){
     tempStringPhase1.push_back(stringBuffer[counterIndex]);
@@ -590,88 +637,12 @@ private:
 
 
 
-
-
-  void secondPhaseStartState(){
-    if(counterIndex >= tokenizedOutput.size()){
-      return;
-    }
-
-    if(tokenizedOutput[counterIndex] -> getTokenString() == "/"){
-      counterIndex ++;
-      if(counterIndex >= tokenizedOutput.size()){
-        return;
-      }
-
-      if(tokenizedOutput[counterIndex] -> getTokenString() == "*"){
-        counterIndex ++;
-        blockCommentState();
-      }
-      else if(tokenizedOutput[counterIndex] -> getTokenString() == "/"){
-        counterIndex ++;
-        lineCommentState();
-      }
-      else{
-        tokenizedOutput.erase(tokenizedOutput.begin() + counterIndex);
-        tokenizedOutput.erase(tokenizedOutput.begin() + counterIndex);
-        //tokenizedOutput.push_back(tokenizedOutput[counterIndex - 1]);
-        //tokenizedOutput.push_back(tokenizedOutput[counterIndex]);
-        //counterIndex ++;
-        secondPhaseStartState();
-      }
-    }
-    else{
-      //tokenizedOutput.push_back(tokenizedOutput[counterIndex]);
-      counterIndex ++;
-      secondPhaseStartState();
-    }
-  }
-
-
-
   
-
-  void blockCommentState(){
-    if(counterIndex >= tokenizedOutput.size()){
-      return;
-    }
-
-    if(tokenizedOutput[counterIndex] -> getTokenString() == "*"){
-      counterIndex ++;
-      if(counterIndex >= tokenizedOutput.size()){
-        return;
-      }
-      
-      if(tokenizedOutput[counterIndex] -> getTokenString() == "/"){
-        counterIndex ++;
-        secondPhaseStartState();
-      }
-      else{
-        counterIndex ++;
-        blockCommentState();
-      }
-    }
-  }
-
-
-
-
-
-  void lineCommentState(){
-    if(tokenizedOutput[counterIndex] -> getTokenString() == "\n"){
-      counterIndex ++;
-      secondPhaseStartState();
-    }
-  }
- 
-
-
-
 
   void classifyKeywords(){
     for(size_t counterIndex3 = 0; counterIndex3 < tokenizedOutput.size(); counterIndex3++){
       //if(builtInTokensData.isExists((tokenizedOutput[counterIndex3] -> getTokenString()))){
-      if(builtInTokensData.isExists(tokenizedOutput[counterIndex3] -> getTokenString().c_str())
+      if(builtInTokensData.isExists(tokenizedOutput[counterIndex3] -> getTokenString())
         && tokenizedOutput[counterIndex3] -> getTokenGeneralType() != tokenType :: SEPARATOR
         && tokenizedOutput[counterIndex3] -> getTokenGeneralType() != tokenType :: OPERATOR
         && tokenizedOutput[counterIndex3] -> getTokenGeneralType() != tokenType :: CONSTANT){
@@ -684,11 +655,11 @@ private:
 
 
     
-  bool isNum(const char* stringToTest){
+  bool isNum(std::string stringToTest){
     
     bool floatAlready = false;
 
-    for(long unsigned int i = 0; i < strlen(stringToTest); i++){
+    for(long unsigned int i = 0; i < stringToTest.size(); i++){
       if(isdigit(stringToTest[i])){
 
       }
@@ -708,7 +679,7 @@ private:
 
   void classifyToNums(){
     for(size_t i = 0; i < tokenizedOutput.size(); i++){
-      if(isNum(tokenizedOutput[i] -> getTokenString().c_str())){
+      if(isNum(tokenizedOutput[i] -> getTokenString())){
         tokenizedOutput[i] -> setTokenGeneralType(tokenType :: NUMBER);
       }
     }
@@ -716,24 +687,24 @@ private:
 
 
 
-  std::shared_ptr<Token> createAndAddOperatorTokenPhase5(const char* mergedTokenString){
+  std::shared_ptr<Token> createAndAddOperatorTokenPhase5(std::string& mergedTokenString){
     std::shared_ptr<TokenOperatorBuilder> tempBuilder = std::make_shared<TokenOperatorBuilder>();
     return directorObject.buildToken(mergedTokenString, getStandingLine(), tempBuilder);
   }
 
-  std::shared_ptr<Token> createAndAddSeparatorTokenPhase5(const char* mergedTokenString){
+  std::shared_ptr<Token> createAndAddSeparatorTokenPhase5(std::string& mergedTokenString){
     std::shared_ptr<TokenSeparatorBuilder> tempBuilder = std::make_shared<TokenSeparatorBuilder>();
     return directorObject.buildToken(mergedTokenString, getStandingLine(), tempBuilder);
   }
 
-  std::shared_ptr<Token> createAndAddKeywordTokenPhase5(const char* mergedTokenString){
+  std::shared_ptr<Token> createAndAddKeywordTokenPhase5(std::string& mergedTokenString){
     std::shared_ptr<TokenKeywordBuilder> tempBuilder = std::make_shared<TokenKeywordBuilder>();
     return directorObject.buildToken(mergedTokenString, getStandingLine(), tempBuilder);
   }
 
 
 
-  std::shared_ptr<Token> mergeBasedOnType(tokenType typeOfTokensToMerge, const char* mergedTokenString){
+  std::shared_ptr<Token> mergeBasedOnType(tokenType typeOfTokensToMerge, std::string& mergedTokenString){
     switch(typeOfTokensToMerge){
       case tokenType :: OPERATOR:
         return createAndAddOperatorTokenPhase5(mergedTokenString);
@@ -745,18 +716,18 @@ private:
         return createAndAddKeywordTokenPhase5(mergedTokenString);
         break;
       default:
-        std::cout << "INTERPRETER DEBUGGING MESSAGE: UNKNOWN TOKEN TYPE AT mergedBasedOnType??\n";
+        //std::cout << "INTERPRETER DEBUGGING MESSAGE: UNKNOWN TOKEN TYPE AT mergedBasedOnType??\n";
         return nullptr;
     }
   }
 
   std::shared_ptr<Token> mergeIfApplies(std::shared_ptr<Token> tokenPtr1, std::shared_ptr<Token> tokenPtr2){
     std::string mergedTokenString = tokenPtr1 -> getTokenString() + tokenPtr2 -> getTokenString();
-    if(builtInTokensData.isExists(mergedTokenString.c_str()) && 
+    if(builtInTokensData.isExists(mergedTokenString) && 
        tokenPtr1 -> getStringGeneralTokenType() == tokenPtr2 -> getStringGeneralTokenType()){
       // CHECK FOR WHICH TYPE OF GENERAL TOKEN TYPE IT IS  
       // THEN CLASSIFY IT AND USE IT'S BUILDER (PUT THE FUNCTION THAT DOES THAT SEPARATELY)
-      return mergeBasedOnType(tokenPtr1 -> getTokenGeneralType(), mergedTokenString.c_str());  
+      return mergeBasedOnType(tokenPtr1 -> getTokenGeneralType(), mergedTokenString);  
     }
     return nullptr;
   }
@@ -770,6 +741,7 @@ private:
     std::shared_ptr<Token> tokenPtrMerged = nullptr;
     
     for(size_t i = 0; i < tokenizedOutput.size() - 1; i++){
+      //std::cout << tokenizedOutput[i] -> getTokenString() << '\n';
 
       tokenPtr1 = tokenizedOutput[i];
       tokenPtr2 = tokenizedOutput[i + 1];

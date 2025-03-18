@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include "../../include/lexer/lexer.hpp"
 #include "../../include/lexer/adders.hpp"
 
 
@@ -40,7 +39,8 @@ SemicolonAdder semicolonAddObject = SemicolonAdder(); // ;
 CommaAdder commaAddObject = CommaAdder(); // ,
 SingleQuotationAdder singleQuotationAddObject = SingleQuotationAdder(); // '
 DoubleQuotationAdder doubleQuotationAddObject = DoubleQuotationAdder(); // " // WAS COMMENTED DUE TO STRINGING
-EscapeSlashAdder escapeSlashAddObject = EscapeSlashAdder(); 
+EscapeSlashAdder escapeSlashAddObject = EscapeSlashAdder(); // espace slash
+NormalSlashAdder normalSlashAddObject = NormalSlashAdder(); // /
 LeftSquareBraceAdder leftSquareBraceAddObject = LeftSquareBraceAdder(); // [
 RightSquareBraceAdder rightSquareBraceAddObject = RightSquareBraceAdder(); // ]
 
@@ -58,8 +58,7 @@ MinusAdder minusAddObject = MinusAdder(); // -
 PlusPlusAdder plusPlusAddObject = PlusPlusAdder(); // ++
 MinusMinusAdder minusMinusAddObject = MinusMinusAdder(); // --
 MinusEqualAdder minusEqualAddObject = MinusEqualAdder(); // -=
-//std::unique_ptr normalSlashAddObject = std::make_unique<NormalSlashAdder>(); // / // WAS COMMENTED DUE TO COMMENTING
-//std::unique_ptr starAddObject = std::make_unique<StarAdder>(); // * // WAS COMMENTED DUE TO COMMENTING
+StarAdder starAddObject = StarAdder();
 StarStarAdder starStarAddObject = StarStarAdder(); // **
 StarEqualAdder starEqualAddObject = StarEqualAdder();
 PlusEqualAdder plusEqualAddObject = PlusEqualAdder() ; // +=

@@ -1,14 +1,14 @@
 [
 {
   "directory": "/home/elshafei/archive/projects/shell_project/build",
-  "command": "/usr/bin/c++  -I/home/elshafei/archive/projects/shell_project/build/include -I/home/elshafei/archive/projects/shell_project/build/include/lexer -I/home/elshafei/archive/projects/shell_project/build/include/parser -I/home/elshafei/archive/projects/shell_project/build/include/logger -std=gnu++17 -o CMakeFiles/seash.dir/home/elshafei/archive/projects/shell_project/src/main.cpp.o -c /home/elshafei/archive/projects/shell_project/src/main.cpp",
+  "command": "/usr/bin/c++  -I/home/elshafei/archive/projects/shell_project/build/include -I/home/elshafei/archive/projects/shell_project/build/include/lexer -I/home/elshafei/archive/projects/shell_project/build/include/syntax_analyzer -I/home/elshafei/archive/projects/shell_project/build/include/ast_gen -I/home/elshafei/archive/projects/shell_project/build/include/logger -std=gnu++20 -o CMakeFiles/engine.dir/home/elshafei/archive/projects/shell_project/src/main.cpp.o -c /home/elshafei/archive/projects/shell_project/src/main.cpp",
   "file": "/home/elshafei/archive/projects/shell_project/src/main.cpp",
-  "output": "CMakeFiles/seash.dir/home/elshafei/archive/projects/shell_project/src/main.cpp.o"
+  "output": "CMakeFiles/engine.dir/home/elshafei/archive/projects/shell_project/src/main.cpp.o"
 },
 {
   "directory": "/home/elshafei/archive/projects/shell_project/build",
-  "command": "/usr/bin/c++  -I/home/elshafei/archive/projects/shell_project/build/include -I/home/elshafei/archive/projects/shell_project/build/include/lexer -I/home/elshafei/archive/projects/shell_project/build/include/parser -I/home/elshafei/archive/projects/shell_project/build/include/logger -std=gnu++17 -o CMakeFiles/seash.dir/home/elshafei/archive/projects/shell_project/src/lexer/adders.cpp.o -c /home/elshafei/archive/projects/shell_project/src/lexer/adders.cpp",
+  "command": "/usr/bin/c++  -I/home/elshafei/archive/projects/shell_project/build/include -I/home/elshafei/archive/projects/shell_project/build/include/lexer -I/home/elshafei/archive/projects/shell_project/build/include/syntax_analyzer -I/home/elshafei/archive/projects/shell_project/build/include/ast_gen -I/home/elshafei/archive/projects/shell_project/build/include/logger -std=gnu++20 -o CMakeFiles/engine.dir/home/elshafei/archive/projects/shell_project/src/lexer/adders.cpp.o -c /home/elshafei/archive/projects/shell_project/src/lexer/adders.cpp",
   "file": "/home/elshafei/archive/projects/shell_project/src/lexer/adders.cpp",
-  "output": "CMakeFiles/seash.dir/home/elshafei/archive/projects/shell_project/src/lexer/adders.cpp.o"
+  "output": "CMakeFiles/engine.dir/home/elshafei/archive/projects/shell_project/src/lexer/adders.cpp.o"
 }
 ]
