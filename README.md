@@ -32,10 +32,12 @@ To make it the default shell, run
 #However, be aware that the project is still in early development, and is not yet stable enough to be used as a replacement
 for the default shell terminal (e.g `bash`, `zsh`, `fish`, etc.). The project is welcome to contributors. 
 
-## For Contributors
+## Installation For Contributors
+
+Follow the same steps, but add the `-DTEST=ON` flag to cmake as follows:
+```cmake CMakeLists.txt -DTEST=ON```
 
 Any contributor must bear in mind that the project doesn't use premade tools for lexing and parsing (`bison`, `YACC`, `ANTLR`, etc.). It's
-entirely written from scratch. The project also strongly follows an OOP approach which makes the modding and feature addition process much
-easier, though it may not be similar to using a premade tool, but it still maintains strong modularity!
+entirely written from scratch in C++, including the lexer, syntax analyzer, AST generator, and runtime. The project also strongly follows an OOP approach which makes the modding and feature addition process much easier, though it may not be similar to using a premade tool, but it still maintains strong modularity!
 
 

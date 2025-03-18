@@ -22,7 +22,6 @@ TokenEnumStringMap& tokenClassStringMapGlobalInstance = TokenEnumStringMap :: ge
 
 
 // COMMENT THIS LINE IN PRODUCTION
-#define TESTING
 
 #define TEST_DIR "/home/elshafei/archive/projects/shell_project/tests/correctness_tests/lexer/samples/test"
 #define OUTPUT_DIR "/home/elshafei/archive/projects/shell_project/tests/correctness_tests/lexer/actual/out"
@@ -30,7 +29,7 @@ TokenEnumStringMap& tokenClassStringMapGlobalInstance = TokenEnumStringMap :: ge
 const int START_TEST = 1;
 const int END_TEST = 11;
 
-#ifdef TESTING
+#ifdef TEST
 
 std::vector<std::string> tests;
 

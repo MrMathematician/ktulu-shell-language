@@ -2,11 +2,18 @@ cmake_minimum_required(VERSION 3.30.2)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(engine)
+project(ktulu)
 
 #if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 #  add_compile_options(-Winline -fdump-tree-optimized)
 #endif()
+
+option(ENABLE_TEST "Enable test mode" OFF) 
+
+if(ENABLE_TEST) 
+  add_definitions(-DTEST)
+endif()
+
 
 set(FullOutputDir "$({CMAKE_SOURCE_DIR}/bin/${CMAKE_SYSTEM_NAME}/${CMAKE_BUILD_TYPE})")
 

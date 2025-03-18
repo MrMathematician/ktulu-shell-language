@@ -4,6 +4,7 @@ build/CMakeCache.txt
 build/performance_records/
 build/compile_logs
 build/Makefile
+build/engine
 
 
 build/.cache
