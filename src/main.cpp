@@ -59,8 +59,6 @@ void runTests(){
     file << interpreter.recreateDiscrete();
     //interpreter.outputTokenStream();
 
-    
-
     std::cout << "Finished test " << i + 1 << '\n';
 
     interpreter.reset();
