@@ -5,10 +5,20 @@ build/performance_records/
 build/compile_logs
 build/Makefile
 
+
+build/.cache
+build/.cmake
+build/compile_commands.json
+
+
+**/.*  
+!.gitignore
+
 versions/
 resources/
 
 .ccls-cache/
+.cache/
 
 opportunity.txt
 code_review.txt
